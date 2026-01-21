@@ -19,5 +19,5 @@ scipy>=1.11
 # Jupyter notebook (optional, for data exploration)
 notebook>=7.0
 
-# Interactive terminal menu (optional, for better UX)
-simple-term-menu>=1.6
+# Interactive terminal menu (optional, for better UX) non funziona su windows
+#simple-term-menu>=1.6
