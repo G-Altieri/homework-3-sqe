@@ -1,31 +1,31 @@
 ================================================================================
 LLM BENCHMARKING SUMMARY REPORT v2
-Generated: 2026-01-21 13:31:47
+Generated: 2026-01-21 16:55:58
 ================================================================================
 
 CONFIGURAZIONE
 ----------------------------------------
-Modelli: qwen2.5:0.5b, llama3.2:latest, mistral:7b
-Prompt analizzati: 5
+Modelli: qwen2.5:0.5b, llama3.2:3b, mistral:7b
+Prompt analizzati: 100
 Iterazioni: 5
 Max token: 256
 
 RISULTATI
 ----------------------------------------
-Record totali: 75
-Record validi: 75
+Record totali: 1500
+Record validi: 1500
 Errori: 0
 
 METRICHE MEDIE PER MODELLO
 ----------------------------------------
                  Avg TTFT (s)  Avg ITL (s)  Avg TPOT (s)  Avg E2E (s)  Avg Throughput  Avg Tokens
 model                                                                                            
-llama3.2:latest        0.3025       0.0114        0.0114       5.2971         85.7556      231.92
-mistral:7b             0.4744       0.0204        0.0203       7.8526         49.2653      256.00
-qwen2.5:0.5b           0.1416       0.0050        0.0050       3.7604        200.6639      256.00
+llama3.2:3b        0.2873       0.0117        0.0116       5.2412         87.0907     234.138
+mistral:7b             0.4032       0.0204        0.0204       7.6333         49.1318     248.348
+qwen2.5:0.5b           0.1438       0.0051        0.0051       3.6654        197.2012     238.518
 
 COEFFICIENT OF VARIATION (stabilità)
 ----------------------------------------
-qwen2.5:0.5b: E2E CV=0.0293, TTFT CV=0.8426
-llama3.2:latest: E2E CV=0.1158, TTFT CV=1.5096
-mistral:7b: E2E CV=0.1519, TTFT CV=2.5054
+qwen2.5:0.5b: E2E CV=0.0738, TTFT CV=0.8064
+llama3.2:3b: E2E CV=0.1317, TTFT CV=1.5113
+mistral:7b: E2E CV=0.1561, TTFT CV=2.6743

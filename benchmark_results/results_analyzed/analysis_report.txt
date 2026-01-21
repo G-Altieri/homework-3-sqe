@@ -1,0 +1,203 @@
+================================================================================
+         LLM BENCHMARKING - REPORT ANALISI DETTAGLIATO
+         Generato: 2026-01-21 17:06:23
+================================================================================
+
+
+================================================================================
+                        GUIDA ALLE METRICHE DI BENCHMARK
+================================================================================
+
+1. TIME TO FIRST TOKEN (TTFT)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo tra invio richiesta e ricezione del primo token.
+   CALCOLO: TTFT = load_duration + prompt_eval_duration
+   INTERPRETAZIONE: Valori bassi = risposta più reattiva
+   UNITÀ: secondi (s)
+
+2. INTER-TOKEN LATENCY (ITL)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo medio tra generazione di token consecutivi.
+   CALCOLO: ITL = eval_duration / (eval_count - 1)
+   INTERPRETAZIONE: Valori bassi = generazione più fluida
+   UNITÀ: secondi (s)
+
+3. TIME PER OUTPUT TOKEN (TPOT)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo medio per generare ogni token di output.
+   CALCOLO: TPOT = eval_duration / eval_count
+   DIFFERENZA CON ITL: TPOT divide per n, ITL divide per n-1
+   UNITÀ: secondi (s)
+
+4. END-TO-END LATENCY (E2E)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo totale dall'invio alla ricezione dell'ultimo token.
+   CALCOLO: E2E = timestamp_fine - timestamp_inizio
+   FORMULA: E2E ≈ TTFT + (output_tokens × TPOT)
+   UNITÀ: secondi (s)
+
+5. THROUGHPUT
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Token generati per secondo.
+   CALCOLO: Throughput = output_tokens / generation_time
+   INTERPRETAZIONE: Valori alti = generazione più veloce
+   UNITÀ: token/secondo (tok/s)
+
+6. PROMPT PROCESSING TIME
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo per processare il prompt di input.
+   CALCOLO: prompt_eval_duration da Ollama
+   INTERPRETAZIONE: Cresce con lunghezza prompt
+   UNITÀ: secondi (s)
+
+7. GENERATION TIME
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Tempo puro di generazione token.
+   CALCOLO: eval_duration da Ollama
+   RELAZIONE: Generation_Time = output_tokens × TPOT
+   UNITÀ: secondi (s)
+
+8. COEFFICIENT OF VARIATION (CV)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Variabilità relativa (stabilità risultati).
+   CALCOLO: CV = deviazione_standard / media
+   INTERPRETAZIONE:
+     CV < 0.1: Molto stabile
+     CV 0.1-0.3: Moderato
+     CV > 0.3: Alta variabilità
+   UNITÀ: adimensionale
+
+9. CORRELAZIONE (r di Pearson)
+--------------------------------------------------------------------------------
+   DEFINIZIONE: Forza relazione lineare tra variabili.
+   RANGE: -1 (negativa) a +1 (positiva)
+   INTERPRETAZIONE:
+     |r| > 0.5: correlazione forte (***)
+     |r| > 0.3: correlazione moderata (**)
+     |r| > 0.1: correlazione debole (*)
+
+================================================================================
+
+
+================================================================================
+                         PANORAMICA DATASET
+================================================================================
+
+Record totali: 1500
+Modelli: qwen2.5:0.5b, llama3.2:latest, mistral:7b
+Prompt unici: 100
+
+================================================================================
+                    STATISTICHE PER MODELLO
+================================================================================
+
+
+────────────────────────────────────────
+MODELLO: qwen2.5:0.5b
+────────────────────────────────────────
+
+  TTFT:
+    Media: 0.143754, Std: 0.115926, CV: 0.8064
+    IC 95%: [0.133593, 0.153916]
+
+  ITL:
+    Media: 0.005130, Std: 0.000497, CV: 0.0970
+    IC 95%: [0.005086, 0.005174]
+
+  TPOT:
+    Media: 0.005105, Std: 0.000476, CV: 0.0932
+    IC 95%: [0.005063, 0.005147]
+
+  E2E_LATENCY:
+    Media: 3.665400, Std: 0.270355, CV: 0.0738
+    IC 95%: [3.641702, 3.689098]
+
+  THROUGHPUT:
+    Media: 197.201176, Std: 14.508515, CV: 0.0736
+    IC 95%: [195.929449, 198.472904]
+
+
+────────────────────────────────────────
+MODELLO: llama3.2:latest
+────────────────────────────────────────
+
+  TTFT:
+    Media: 0.287325, Std: 0.434242, CV: 1.5113
+    IC 95%: [0.249262, 0.325388]
+
+  ITL:
+    Media: 0.011672, Std: 0.001974, CV: 0.1691
+    IC 95%: [0.011499, 0.011846]
+
+  TPOT:
+    Media: 0.011583, Std: 0.001622, CV: 0.1400
+    IC 95%: [0.011441, 0.011725]
+
+  E2E_LATENCY:
+    Media: 5.241215, Std: 0.690315, CV: 0.1317
+    IC 95%: [5.180707, 5.301724]
+
+  THROUGHPUT:
+    Media: 87.090655, Std: 5.783405, CV: 0.0664
+    IC 95%: [86.583717, 87.597592]
+
+
+────────────────────────────────────────
+MODELLO: mistral:7b
+────────────────────────────────────────
+
+  TTFT:
+    Media: 0.403171, Std: 1.078198, CV: 2.6743
+    IC 95%: [0.308662, 0.497679]
+
+  ITL:
+    Media: 0.020445, Std: 0.000415, CV: 0.0203
+    IC 95%: [0.020409, 0.020481]
+
+  TPOT:
+    Media: 0.020361, Std: 0.000412, CV: 0.0202
+    IC 95%: [0.020325, 0.020398]
+
+  E2E_LATENCY:
+    Media: 7.633268, Std: 1.191555, CV: 0.1561
+    IC 95%: [7.528824, 7.737713]
+
+  THROUGHPUT:
+    Media: 49.131782, Std: 0.965682, CV: 0.0197
+    IC 95%: [49.047136, 49.216428]
+
+
+================================================================================
+                      CORRELAZIONI
+================================================================================
+
+Prompt Length vs Metriche:
+  qwen2.5:0.5b:
+    ttft: r = 0.2607 *
+    e2e_latency: r = 0.2203 *
+    throughput: r = 0.1202 *
+  llama3.2:latest:
+    ttft: r = 0.3254 **
+    e2e_latency: r = -0.0974 
+    throughput: r = -0.6525 ***
+  mistral:7b:
+    ttft: r = 0.3514 **
+    e2e_latency: r = 0.4055 **
+    throughput: r = -0.6835 ***
+
+================================================================================
+                      VARIABILITÀ (CV)
+================================================================================
+
+          Model  e2e_latency_cv  ttft_cv  throughput_cv
+   qwen2.5:0.5b        0.024406 0.646102       0.053718
+llama3.2:latest        0.054572 1.006785       0.039245
+     mistral:7b        0.081561 1.588054       0.014267
+
+================================================================================
+                      CONCLUSIONI
+================================================================================
+
+  • Miglior TTFT: qwen2.5:0.5b (0.1438s)
+  • Miglior Throughput: qwen2.5:0.5b (197.20 tok/s)
+  • Miglior E2E: qwen2.5:0.5b (3.6654s)
