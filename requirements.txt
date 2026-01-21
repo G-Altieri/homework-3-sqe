@@ -1,0 +1,23 @@
+# LLM Benchmarking - Requirements
+# Python 3.11.9 compatible
+# Software Quality Engineering 2025/2026 - Homework 3
+
+# Core dependencies
+requests>=2.31
+jsonlines>=4.0
+pandas>=2.0
+numpy>=1.24
+tqdm>=4.66
+
+# Visualization
+matplotlib>=3.8
+seaborn>=0.13
+
+# Statistical analysis
+scipy>=1.11
+
+# Jupyter notebook (optional, for data exploration)
+notebook>=7.0
+
+# Interactive terminal menu (optional, for better UX)
+simple-term-menu>=1.6
