@@ -258,4 +258,3 @@ pip install "numpy<2.0"
 
 - [Ollama Documentation](https://github.com/ollama/ollama)
 - [Modelli disponibili](https://ollama.com/library)
-- Notebook Jupyter: Apri `analysis_notebook.ipynb` per esplorazioni interattive
