@@ -438,15 +438,14 @@ def generate_with_stream(model: str, prompt: str, options: dict = None) -> dict:
     else:
         itl_measured = 0.0
     
-    output_tokens = len(chunks)
-    
-    # Extract accurate metrics from Ollama
+    # Extract accurate metrics from Ollama - SPOSTATO PRIMA
     ollama_metrics = {}
     itl_ollama = 0.0
     tpot = 0.0
     prompt_processing_time = 0.0
     generation_time = 0.0
     ttft_ollama = 0.0
+    eval_count = 0  # INIZIALIZZATO QUI
     
     if last_data:
         total_duration = last_data.get("total_duration", 0) * 1e-9
@@ -478,13 +477,17 @@ def generate_with_stream(model: str, prompt: str, options: dict = None) -> dict:
         
         ttft_ollama = load_duration + prompt_eval_duration
     
-    # Throughput
-    if generation_time > 0:
-        throughput = output_tokens / generation_time
-    elif e2e_latency > 0:
-        throughput = output_tokens / e2e_latency
+    # Determina output_tokens - ORA eval_count è definito
+    if eval_count is not None and eval_count > 0:
+        output_tokens = eval_count
     else:
-        throughput = 0
+        output_tokens = len(chunks)  # fallback di sicurezza
+    
+    # Throughput
+    if eval_count and eval_duration and eval_duration > 0:
+        throughput = eval_count / eval_duration
+    else:
+        throughput = output_tokens / generation_time if generation_time > 0 else 0
     
     return {
         "error": None,
@@ -501,7 +504,6 @@ def generate_with_stream(model: str, prompt: str, options: dict = None) -> dict:
         "generation_time": generation_time,
         "ollama_metrics": ollama_metrics
     }
-
 
 def run_benchmark(config: dict) -> pd.DataFrame:
     """Run the complete benchmark."""
